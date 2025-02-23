@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengali Name Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            position: relative;
+        }
+        h1 {
+            color: #ff6600;
+        }
+        .controls {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "\1F468";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-size: 18px;
+        }
+        input:checked + .slider {
+            background-color: #ff6600;
+        }
+        input:checked + .slider:before {
+            content: "\1F469";
+            transform: translateX(26px);
+        }
+        button {
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #cc5500;
+        }
+        .name-box {
+            font-size: 24px;
+            margin-top: 30px;
+            font-weight: bold;
+            color: #333;
+            min-height: 30px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f1f1f1;
+        }
+        .copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bengali Name Generator</h1>
+        <div class="controls">
+            <label class="switch">
+                <input type="checkbox" id="genderSwitch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="name-box" id="nameBox">Generated name will appear here</div>
+        <button onclick="generateName()">Generate Name</button>
+        <div class="copyright">&copy; 2025 Nirob Shaha</div>
+    </div>
+    <script>
+        const femaleNames = ["Aarohi", "Madhuri", "Nandita", "Pritha", "Ritika", "Tanisha", "Ishita", "Meghna", "Sanchita", "Tithi", "Ananya", "Bidisha", "Chaitali", "Dipannita", "Eshita", "Falguni", "Gargi", "Hiya", "Ipshita", "Jinia"];
+        const maleNames = ["Amit", "Bikash", "Chiranjit", "Dipankar", "Eshan", "Farhan", "Gopal", "Himadri", "Indranil", "Jitendra", "Kaushik", "Lalit", "Manish", "Nirupam", "Omkar", "Pranjal", "Ritwik", "Subham", "Tapan", "Utpal"];
+        let usedNames = new Set();
+        
+        function generateName() {
+            let gender = document.getElementById("genderSwitch").checked ? 'female' : 'male';
+            let names = gender === 'female' ? femaleNames : maleNames;
+            if (usedNames.size === names.length) {
+                usedNames.clear();
+            }
+            let newName;
+            do {
+                newName = names[Math.floor(Math.random() * names.length)];
+            } while (usedNames.has(newName));
+            usedNames.add(newName);
+            document.getElementById("nameBox").textContent = newName;
+            copyToClipboard(newName);
+        }
+        
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+    </script>
+</body>
+</html>
